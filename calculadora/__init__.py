@@ -9,20 +9,17 @@ def statistics (player_list, goals, goals_avoided, assists):
     return stats_dict
 
 # Punto 2: Identificar goleador
-def high_scorer(player_list, goals):
-    scored = max(goals)
-    goal_scorer = []
-    # Identify all high high scorer players
-    for player in player_list:
-        if goals[player_list.index(player)] == scored:
-            goal_scorer.append(player)
-    return goal_scorer, scored
+def high_scorer(stats):
+    scored = max(stats[player][0] for player in stats)
+    high_scorer = dict(filter(lambda x: (x[1][0]) == scored, stats.items()))
+    return high_scorer
 
 
 # Punto 3: Identificar jugador más influyente
 def calc_influence(player_list, goal, avoided, assist):
     # Formula to calculate influence
     influence = lambda goal, avoided, assist: goal*1.5 + avoided*1.25 + assist
+    # Create list of influence of all players 
     influence_list = list(map(influence, goal, avoided, assist))
     max_influence = max(influence_list)
     max_player = []
